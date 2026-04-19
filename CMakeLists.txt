@@ -72,6 +72,11 @@ if(CMAKE_C_COMPILER_ID MATCHES "Clang" AND CMAKE_C_SIMULATE_ID MATCHES "MSVC")
 endif()
 
 aux_source_directory(common COMMON_SRC)
+if (MINGW)
+    # 移除 pthreads_cross 的源文件，使用系统提供的 pthread
+    list(FILTER COMMON_SRC EXCLUDE REGEX "pthreads_cross")
+    add_compile_definitions(HAVE_PTHREAD)
+endif()
 set(APRILTAG_SRCS apriltag.c apriltag_pose.c apriltag_quad_thresh.c)
 
 # Library
