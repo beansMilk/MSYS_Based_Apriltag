@@ -4,6 +4,37 @@ AprilTag is a visual fiducial system popular in robotics research. This reposito
 
 You can find tag images for the pre-generated layouts [here](https://github.com/AprilRobotics/apriltag-imgs). We recommend using the tagStandard41h12 layout.
 
+# How to install this repository
+---
+## Prepare
+#### install ninja
+```ucrt64 bash
+pacman -S mingw-w64-ucrt-x86_64-ninja
+```
+## Install
+#### clone the repository:
+```ucrt64 bash
+git clone https://github.com/beansMilk/MSYS_Based_Apriltag.git
+cd MSYS_Based_Apriltag
+```
+#### install
+```ucrt64 bash
+cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=/usr/local
+ninja install
+```
+#### check the installation
+use its demo to check
+```ucrt64 bash
+opencv_demo
+```
+
+# personal acknowledgement
+This repository is based on [AprilTag](https://github.com/AprilRobotics/apriltag)
+
+Especially thasks to DS & beansMilk (Yeah that's me)
+
+The following is the source MarkDown file
+---
 Table of Contents
 =================
 - [Papers](#papers)
