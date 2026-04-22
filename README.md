@@ -8,7 +8,12 @@ You can find tag images for the pre-generated layouts [here](https://github.com/
 ---
 ## Prepare
 #### install ninja
+
 ```ucrt64 bash
+# If you want to use the system-with pthread lib
+you can inistall it throw this
+pacman -S mingw-w64-ucrt-x86_64-winpthread 
+# install ninja
 pacman -S mingw-w64-ucrt-x86_64-ninja
 ```
 ## Install

@@ -38,12 +38,10 @@ extern "C" {
 #include "common/zarray.h"
 #include "common/workerpool.h"
 #include "common/timeprofile.h"
-#ifdef _MSC_VER
-    // MSVC 编译器：使用兼容层
-    #include "common/pthreads_cross.h"
-#else
-    // GCC/Clang (包括 MinGW/MSYS2)：使用系统 pthread
+#ifdef HAVE_PTHREAD
     #include <pthread.h>
+#else
+    #include "common/pthreads_cross.h"
 #endif
 
 #define APRILTAG_TASKS_PER_THREAD_TARGET 10

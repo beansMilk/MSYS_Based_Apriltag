@@ -72,10 +72,21 @@ if(CMAKE_C_COMPILER_ID MATCHES "Clang" AND CMAKE_C_SIMULATE_ID MATCHES "MSVC")
 endif()
 
 aux_source_directory(common COMMON_SRC)
-if (MINGW)
-    # 移除 pthreads_cross 的源文件，使用系统提供的 pthread
-    list(FILTER COMMON_SRC EXCLUDE REGEX "pthreads_cross")
+include(CheckIncludeFile)
+include(CheckSymbolExists)
+check_include_file(pthread.h HAVE_PTHREAD_H)
+
+set(CMAKE_REQUIRED_LIBRARIES pthread)
+check_symbol_exists(pthread_create "pthread.h" HAVE_PTHREAD_CREATE)
+check_symbol_exists(pthread_mutex_lock "pthread.h" HAVE_PTHREAD_MUTEX_LOCK)
+
+if(HAVE_PTHREAD_H AND HAVE_PTHREAD_CREATE AND HAVE_PTHREAD_MUTEX_LOCK)
+    message(STATUS "Found system pthread, using it")
     add_compile_definitions(HAVE_PTHREAD)
+    list(FILTER COMMON_SRC EXCLUDE REGEX "pthreads_cross")
+    target_link_libraries(${PROJECT_NAME} pthread)
+else()
+    message(STATUS "No system pthread found, using bundled pthreads_cross")
 endif()
 set(APRILTAG_SRCS apriltag.c apriltag_pose.c apriltag_quad_thresh.c)
 
